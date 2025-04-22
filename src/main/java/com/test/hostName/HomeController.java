@@ -15,7 +15,7 @@ public class HomeController {
     @GetMapping("/index")
     @ResponseBody
     public String home() throws IOException {
-        String gitRepo = "https://github.com/monayem02/Note-Taker.git";
+        String gitRepo = "https://github.com/monayem02/devops-task-1.git";
         ProcessBuilder builder = new ProcessBuilder("git", "ls-remote", gitRepo, "refs/heads/main");
         Process process = builder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));

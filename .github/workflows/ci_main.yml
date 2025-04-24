@@ -28,3 +28,24 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: monayem02/host-name-app:latest
+
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        vm: ["VM1", "VM2", "VM3"]
+    steps:
+      - name: Deploy to VM ${{ matrix.vm }}
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets[format('{0}_HOST', matrix.vm)] }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            docker pull monayem02/host-name-app:latest
+            docker stop host-name-app || true
+            docker rm host-name-app || true
+            docker run -d --name host-name-app -p 8080:8080 -e HOST_HOSTNAME=$(hostname) monayem02/host-name-app:latest

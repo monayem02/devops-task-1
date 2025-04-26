@@ -13,7 +13,7 @@ import java.util.Objects;
 @Controller
 public class HomeController {
 
-    @GetMapping("/index")
+    @GetMapping
     @ResponseBody
     public String home() throws IOException {
         String gitRepo = "https://github.com/monayem02/devops-task-1.git";

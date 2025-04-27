@@ -39,6 +39,9 @@ jobs:
 #        vm: ["VM1", "VM2", "VM3"]
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Debug - Show working dir and files
         run: |
           pwd

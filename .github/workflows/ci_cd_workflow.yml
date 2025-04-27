@@ -34,14 +34,23 @@ jobs:
     needs: build-and-push
     runs-on: self-hosted
 
-    strategy:
-      matrix:
-        vm: ["VM1", "VM2", "VM3"]
+#    strategy:
+#      matrix:
+#        vm: ["VM1", "VM2", "VM3"]
 
     steps:
+      - name: Debug - Show working dir and files
+        run: |
+          pwd
+          ls -al
+          cd ${{ github.workspace }}
+          ls -al
+
       - name: Run ansible playbook for deployment
         run: |
           ansible-playbook -i ansible/inventory/hosts.ini ansible/playbooks/pull_image_and_run.yml
+        working-directory:
+          ${{ github.workspace }}
 
 #    steps:
 #      - name: Deploy to VM ${{ matrix.vm }}
